@@ -558,12 +558,78 @@
     .fade-in {
       opacity: 0;
       transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+    /* stagger children */
+    .fade-in .stat-card { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible .stat-card:nth-child(1) { opacity:1; transform:translateY(0); transition-delay:0.1s; }
+    .fade-in.visible .stat-card:nth-child(2) { opacity:1; transform:translateY(0); transition-delay:0.25s; }
+    .fade-in.visible .stat-card:nth-child(3) { opacity:1; transform:translateY(0); transition-delay:0.4s; }
+    .fade-in.visible .stat-card:nth-child(4) { opacity:1; transform:translateY(0); transition-delay:0.55s; }
+
+    .fade-in .skill-card { opacity:0; transform:translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible .skill-card:nth-child(1){opacity:1;transform:translateY(0);transition-delay:0.05s}
+    .fade-in.visible .skill-card:nth-child(2){opacity:1;transform:translateY(0);transition-delay:0.15s}
+    .fade-in.visible .skill-card:nth-child(3){opacity:1;transform:translateY(0);transition-delay:0.25s}
+    .fade-in.visible .skill-card:nth-child(4){opacity:1;transform:translateY(0);transition-delay:0.35s}
+    .fade-in.visible .skill-card:nth-child(5){opacity:1;transform:translateY(0);transition-delay:0.45s}
+    .fade-in.visible .skill-card:nth-child(6){opacity:1;transform:translateY(0);transition-delay:0.55s}
+    .fade-in.visible .skill-card:nth-child(7){opacity:1;transform:translateY(0);transition-delay:0.65s}
+
+    .fade-in .project-card { opacity:0; transform:translateY(24px) scale(0.97); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible .project-card:nth-child(1){opacity:1;transform:none;transition-delay:0.05s}
+    .fade-in.visible .project-card:nth-child(2){opacity:1;transform:none;transition-delay:0.15s}
+    .fade-in.visible .project-card:nth-child(3){opacity:1;transform:none;transition-delay:0.25s}
+    .fade-in.visible .project-card:nth-child(4){opacity:1;transform:none;transition-delay:0.35s}
+    .fade-in.visible .project-card:nth-child(5){opacity:1;transform:none;transition-delay:0.45s}
+    .fade-in.visible .project-card:nth-child(6){opacity:1;transform:none;transition-delay:0.55s}
+
+    .fade-in .exp-item { opacity:0; transform:translateX(-20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible .exp-item:nth-child(1){opacity:1;transform:none;transition-delay:0.1s}
+    .fade-in.visible .exp-item:nth-child(2){opacity:1;transform:none;transition-delay:0.25s}
+    .fade-in.visible .exp-item:nth-child(3){opacity:1;transform:none;transition-delay:0.4s}
+
+    .fade-in .edu-item { opacity:0; transform:translateX(-20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible .edu-item:nth-child(1){opacity:1;transform:none;transition-delay:0.1s}
+    .fade-in.visible .edu-item:nth-child(2){opacity:1;transform:none;transition-delay:0.22s}
+    .fade-in.visible .edu-item:nth-child(3){opacity:1;transform:none;transition-delay:0.34s}
+    .fade-in.visible .edu-item:nth-child(4){opacity:1;transform:none;transition-delay:0.46s}
+
+    /* ── COUNTER GLOW ── */
+    @keyframes glowPulse {
+      0%, 100% { text-shadow: 0 0 8px rgba(0,229,176,0.4); }
+      50% { text-shadow: 0 0 22px rgba(0,229,176,0.9), 0 0 40px rgba(0,229,176,0.3); }
+    }
+    .stat-num.counted { animation: glowPulse 2s ease-in-out infinite; }
+
+    /* ── HERO TEXT ANIMATION ── */
+    @keyframes slideUp {
+      from { opacity:0; transform: translateY(40px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+    #hero .hero-eyebrow { animation: slideUp 0.7s ease 0.2s both; }
+    #hero h1            { animation: slideUp 0.7s ease 0.4s both; }
+    #hero .hero-subtitle{ animation: slideUp 0.7s ease 0.6s both; }
+    #hero .hero-tags    { animation: slideUp 0.7s ease 0.75s both; }
+    #hero .hero-cta     { animation: slideUp 0.7s ease 0.9s both; }
+    #hero .avail        { animation: slideUp 0.7s ease 0.1s both; }
+
+    /* ── SECTION LABEL LINE DRAW ── */
+    @keyframes lineGrow { from { width:0; } to { width:1.5rem; } }
+    .fade-in.visible .section-label::before { animation: lineGrow 0.5s ease 0.3s both; }
+
+    /* ── CURSOR GLOW TRAIL ── */
+    #cursor-glow {
+      position: fixed;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,229,176,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      transition: left 0.15s ease, top 0.15s ease;
     }
 
     /* ── RESPONSIVE ── */
@@ -634,19 +700,19 @@
         </div>
         <div class="about-stats">
           <div class="stat-card">
-            <div class="stat-num">2+</div>
+            <div class="stat-num" data-target="2" data-suffix="+">0+</div>
             <div class="stat-label">Years Experience</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num">10+</div>
+            <div class="stat-num" data-target="10" data-suffix="+">0+</div>
             <div class="stat-label">Projects Built</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num">4</div>
+            <div class="stat-num" data-target="4">0</div>
             <div class="stat-label">Languages Spoken</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num">UK+MY</div>
+            <div class="stat-num" data-target="UK+MY">UK+MY</div>
             <div class="stat-label">Dual Degree</div>
           </div>
         </div>
@@ -997,15 +1063,67 @@
     <p>© 2026 Abdul Hafeez Khan · Software Engineer · Dubai, UAE</p>
   </footer>
 
-  <!-- SCROLL ANIMATION -->
+  <!-- CURSOR GLOW -->
+  <div id="cursor-glow"></div>
+
   <script>
+    // Cursor glow
+    const glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', e => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top  = e.clientY + 'px';
+    });
+
+    // Counter animation with slot-machine runway effect
+    function animateCounter(el) {
+      const target = el.dataset.target;
+      const isNum  = !isNaN(target);
+      if (!isNum) { el.textContent = target; el.classList.add('counted'); return; }
+
+      const end      = parseInt(target);
+      const suffix   = el.dataset.suffix || '';
+      const duration = 2000;
+      const start    = performance.now();
+
+      // Phase 1: rapid random scramble, Phase 2: ease into final value
+      function step(now) {
+        const elapsed = now - start;
+        const p = Math.min(elapsed / duration, 1);
+
+        if (p < 0.55) {
+          // Scramble phase — show random numbers flying past
+          const rand = Math.floor(Math.random() * (end * 3));
+          el.textContent = rand + suffix;
+        } else {
+          // Ease-in phase — lock onto real value
+          const p2   = (p - 0.55) / 0.45;
+          const ease = 1 - Math.pow(1 - p2, 3);
+          const val  = Math.floor(ease * end);
+          el.textContent = val + suffix;
+        }
+
+        if (p < 1) {
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = end + suffix;
+          el.classList.add('counted');
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Intersection observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          // trigger counters inside this section
+          entry.target.querySelectorAll('.stat-num[data-target]').forEach(el => {
+            if (!el.classList.contains('counted')) animateCounter(el);
+          });
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
